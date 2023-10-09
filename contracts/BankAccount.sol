@@ -7,4 +7,12 @@ contract BankAccount {
     uint value,
     uint timestamp
   );
+
+  event WithdrawRequest(
+    address indexed user,
+    uint indexed accountId,
+    uint indexed withdrawId,
+    uint amount,
+    uint timestamp
+  );
 }
