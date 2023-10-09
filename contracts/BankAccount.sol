@@ -8,7 +8,7 @@ contract BankAccount {
     uint timestamp
   );
 
-  event WithdrawRequest(
+  event WithdrawRequested(
     address indexed user,
     uint indexed accountId,
     uint indexed withdrawId,
