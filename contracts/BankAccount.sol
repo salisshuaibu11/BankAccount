@@ -19,4 +19,9 @@ contract BankAccount {
     uint indexed withdrawId,
     uint timestamp
   );
+  event AccountCreated(
+    address[] owners,
+    uint indexed id,
+    uint timestamp
+  );
 }
