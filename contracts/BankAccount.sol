@@ -99,7 +99,14 @@ contract BankAccount {
     emit AccountCreated(owners, id, block.timestamp);
   }
 
-  function requestWithdrawal(uint accountId, uint amount) external {}
+  function requestWithdrawal(uint accountId, uint amount) external accountOwner(accountId) {
+    uint256 id = nextWithdrawId;
+    WithdrawRequest storage request = accounts[accountId].withdrawRequest[id];
+    request.user = msg.sender;
+    request.amount = amount;
+    nextWithdrawId++;
+    emit WithdrawRequested(msg.sender, accountId, id, amount, block.timestamp);
+  }
 
   function approveWithdrawal(uint accountId, uint withdrawId) external {}
 
