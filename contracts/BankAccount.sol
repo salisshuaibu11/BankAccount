@@ -77,6 +77,26 @@ contract BankAccount {
     _;
   }
 
+  modifier canApprove(uint accountId, uint withdrawId) {
+    require(
+      !accounts[accountId].withdrawRequest[withdrawId].approved, 
+      "this request is already approved"
+    );
+    require(
+      accounts[accountId].withdrawRequest[withdrawId].user != msg.sender, 
+      "you cannot approve this request"
+    );
+    require(
+      accounts[accountId].withdrawRequest[withdrawId].user != address(0), 
+      "this request does not exists"
+    );
+    require(
+      !accounts[accountId].withdrawRequest[withdrawId].ownersApproved[msg.sender], 
+      "you have already approved this request"
+    );
+    _;
+  }
+
   function deposit(uint accountId) external payable accountOwner(accountId){
     accounts[accountId].balance += msg.value;
   }
@@ -113,7 +133,7 @@ contract BankAccount {
     emit WithdrawRequested(msg.sender, accountId, id, amount, block.timestamp);
   }
 
-  function approveWithdrawal(uint accountId, uint withdrawId) external {}
+  function approveWithdrawal(uint accountId, uint withdrawId) external accountOwner(accountId) canApprove(accountId, withdrawId) {}
 
   function withdraw(uint accountId, uint withdrawId) external {}
 
