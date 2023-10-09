@@ -60,11 +60,23 @@ contract BankAccount {
     _;
   }
 
+  modifier validOwners(address[] calldata owners) {
+    require(owners.length + 1 <= 4, "maximum of 4 owners per account");
+    for (uint i; i < owners.length; i++) {
+      for (uint j = i + 1; j < owners.length; j++) {
+        if (owners[i] == owners[j]) {
+          revert("no duplicate owners");
+        }
+      }
+    }
+    _;
+  }
+
   function deposit(uint accountId) external payable accountOwner(accountId){
     accounts[accountId].balance += msg.value;
   }
 
-  function createAccount(address[] calldata otherOwners) external {
+  function createAccount(address[] calldata otherOwners) external validOwners(otherOwners) {
     address[] memory owners = new address[](otherOwners.length + 1);
     owners[otherOwners.length] = msg.sender;
 
