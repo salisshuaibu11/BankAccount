@@ -41,4 +41,6 @@ contract BankAccount {
 
   mapping(uint => Account) accounts;
   mapping(address => uint[]) userAccounts;
+
+  uint nextAccountId;
 }
