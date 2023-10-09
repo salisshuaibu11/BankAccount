@@ -56,4 +56,6 @@ contract BankAccount {
   function approveWithdrawal(uint accountId, uint withdrawId) external {}
 
   function withdraw(uint accountId, uint withdrawId) external {}
+
+  function getBalance(uint accountId) public view returns(uint) {}
 }
