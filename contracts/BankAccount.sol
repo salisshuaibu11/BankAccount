@@ -32,4 +32,10 @@ contract BankAccount {
     mapping(address => bool) ownersApproved;
     bool approved;
   }
+
+  struct Account {
+    address[] owners;
+    uint balance;
+    mapping(uint => WithdrawRequest) withdrawRequest;
+  }
 }
