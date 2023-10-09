@@ -24,4 +24,12 @@ contract BankAccount {
     uint indexed id,
     uint timestamp
   );
+
+  struct WithdrawRequest {
+    address user;
+    uint amount;
+    uint approvals;
+    mapping(address => bool) ownersApproved;
+    bool approved;
+  }
 }
