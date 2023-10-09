@@ -62,4 +62,6 @@ contract BankAccount {
   function getOwners(uint accountId) public view returns(address[] memory) {}
 
   function getApprovals(uint accountId, uint withdrawId) public view returns(uint) {}
+
+  function getAccounts() public view returns(uint[] memory) {}
 }
