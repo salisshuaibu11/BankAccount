@@ -143,7 +143,17 @@ contract BankAccount {
     }
   }
 
-  function withdraw(uint accountId, uint withdrawId) external {}
+  function withdraw(uint accountId, uint withdrawId) external {
+    uint amount = accounts[accountId].withdrawRequest[withdrawId].amount;
+    require(accounts[accountId].balance >= amount, "insufficient balance");
+
+    accounts[accountId].balance -= amount;
+    delete accounts[accountId].withdrawRequest[withdrawId];
+
+    (bool sent,) = payable(msg.sender).call{value: amount}("");
+    require(sent);
+    emit Withdraw(withdrawId, block.timestamp);
+  }
 
   function getBalance(uint accountId) public view returns(uint) {}
 
