@@ -46,6 +46,8 @@ contract BankAccount {
   uint nextWithdrawId;
 
   function deposit(uint accountId) external payable {
-    
+
   }
+
+  function createAccount(address[] calldata otherOwners) external {}
 }
