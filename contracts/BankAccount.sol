@@ -15,4 +15,8 @@ contract BankAccount {
     uint amount,
     uint timestamp
   );
+  event Withdraw(
+    uint indexed withdrawId,
+    uint timestamp
+  );
 }
