@@ -38,4 +38,6 @@ contract BankAccount {
     uint balance;
     mapping(uint => WithdrawRequest) withdrawRequest;
   }
+
+  mapping(uint => Account) accounts;
 }
