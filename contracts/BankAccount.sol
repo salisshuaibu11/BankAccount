@@ -58,4 +58,6 @@ contract BankAccount {
   function withdraw(uint accountId, uint withdrawId) external {}
 
   function getBalance(uint accountId) public view returns(uint) {}
+
+  function getOwners(uint accountId) public view returns(address[] memory) {}
 }
