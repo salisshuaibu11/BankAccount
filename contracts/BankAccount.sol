@@ -52,4 +52,6 @@ contract BankAccount {
   function createAccount(address[] calldata otherOwners) external {}
 
   function requestWithdrawal(uint accountId, uint amount) external {}
+
+  function approveWithdrawal(uint accountId, uint withdrawId) external {}
 }
