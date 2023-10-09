@@ -45,8 +45,23 @@ contract BankAccount {
   uint nextAccountId;
   uint nextWithdrawId;
 
-  function deposit(uint accountId) external payable {
+  modifier accountOwner(uint accountId) {
+    bool isOwner;
 
+    for (uint idx; idx < accounts[accountId].owners.length; idx++) {
+      if (accounts[accountId].owners[idx] == msg.sender) {
+        isOwner = true;
+        break;
+      }
+    }
+
+    require(isOwner, "You are not an owner of this account");
+
+    _;
+  }
+
+  function deposit(uint accountId) external payable accountOwner(accountId){
+    accounts[accountId].balance += msg.value;
   }
 
   function createAccount(address[] calldata otherOwners) external {}
