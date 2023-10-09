@@ -54,4 +54,6 @@ contract BankAccount {
   function requestWithdrawal(uint accountId, uint amount) external {}
 
   function approveWithdrawal(uint accountId, uint withdrawId) external {}
+
+  function withdraw(uint accountId, uint withdrawId) external {}
 }
