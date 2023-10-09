@@ -44,4 +44,8 @@ contract BankAccount {
 
   uint nextAccountId;
   uint nextWithdrawId;
+
+  function deposit(uint accountId) external payable {
+    
+  }
 }
