@@ -161,7 +161,9 @@ contract BankAccount {
     emit Withdraw(withdrawId, block.timestamp);
   }
 
-  function getBalance(uint accountId) public view returns(uint) {}
+  function getBalance(uint accountId) public view returns(uint) {
+    return accounts[accountId].balance;
+  }
 
   function getOwners(uint accountId) public view returns(address[] memory) {}
 
