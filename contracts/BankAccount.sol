@@ -97,6 +97,12 @@ contract BankAccount {
     _;
   }
 
+  modifier canWithdraw(uint accountId, uint withdrawId) {
+    require(accounts[accountId].withdrawRequest[withdrawId].user == msg.sender, "You did not create this request");
+    require(accounts[accountId].withdrawRequest[withdrawId].approved, "This is request is not approved");
+    _;
+  }
+
   function deposit(uint accountId) external payable accountOwner(accountId){
     accounts[accountId].balance += msg.value;
   }
@@ -143,7 +149,7 @@ contract BankAccount {
     }
   }
 
-  function withdraw(uint accountId, uint withdrawId) external {
+  function withdraw(uint accountId, uint withdrawId) external canWithdraw(accountId, withdrawId) {
     uint amount = accounts[accountId].withdrawRequest[withdrawId].amount;
     require(accounts[accountId].balance >= amount, "insufficient balance");
 
