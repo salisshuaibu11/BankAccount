@@ -53,5 +53,22 @@ describe("BankAccount", function () {
       const accounts3 = await bankAccount.connect(addr2).getAccounts();
       expect(accounts3.length).to.equal(1);
     });
+
+    it("Should allow creating a quad user account", async() => {
+      const { bankAccount, addr0, addr1, addr2, addr3 } = await loadFixture(deployBankAccount); 
+      await bankAccount.connect(addr0).createAccount([addr1, addr2, addr3]);
+
+      const accounts1 = await bankAccount.connect(addr0).getAccounts();
+      expect(accounts1.length).to.equal(1);
+
+      const accounts2 = await bankAccount.connect(addr1).getAccounts();
+      expect(accounts2.length).to.equal(1);
+
+      const accounts3 = await bankAccount.connect(addr2).getAccounts();
+      expect(accounts3.length).to.equal(1);
+
+      const accounts4 = await bankAccount.connect(addr3).getAccounts();
+      expect(accounts4.length).to.equal(1);
+    });
   });
 });
