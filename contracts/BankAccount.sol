@@ -173,5 +173,7 @@ contract BankAccount {
     return accounts[accountId].withdrawRequest[withdrawId].approvals;
   }
 
-  function getAccounts() public view returns(uint[] memory) {}
+  function getAccounts() public view returns(uint[] memory) {
+    return userAccounts[msg.sender];
+  }
 }
