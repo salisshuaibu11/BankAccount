@@ -28,5 +28,16 @@ describe("BankAccount", function () {
       const accounts = await bankAccount.connect(addr0).getAccounts();
       expect(accounts.length).to.equal(1);
     });
+
+    it("Should allow creating a double user account", async() => {
+      const { bankAccount, addr0, addr1 } = await loadFixture(deployBankAccount); 
+      await bankAccount.connect(addr0).createAccount([addr1]);
+
+      const accounts1 = await bankAccount.connect(addr0).getAccounts();
+      expect(accounts1.length).to.equal(1);
+
+      const accounts2 = await bankAccount.connect(addr1).getAccounts();
+      expect(accounts2.length).to.equal(1);
+    });
   });
 });
