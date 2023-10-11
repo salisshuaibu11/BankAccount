@@ -101,4 +101,8 @@ describe("BankAccount", function () {
       await expect(bankAccount.connect(addr0).createAccount([])).to.be.reverted;
     });
   });
+
+  describe("Depositing", () => {
+    
+  });
 });
