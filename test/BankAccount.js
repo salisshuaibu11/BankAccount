@@ -14,6 +14,30 @@ describe("BankAccount", function () {
     return { bankAccount, addr0, addr1, addr2, addr3, addr4 };
   }
 
+  async function deployBankAccountWithAccounts (owners = 1, deposit = 0, withdrawalAmount = []) {
+    const { addr0, addr1, addr2, addr3, addr4 } = await loadFixture(deployBankAccount);
+    let addresses = [];
+
+    if (owners === 2) addresses = [addr0.address];
+    else if (owners === 3) addresses = [addr1.address, addr2.address];
+    else if (owners === 4)
+      addresses = [add1.address, addr2.address, addr3.address];
+
+    await bankAccount.connect(addr0).createAccount(addresses);
+
+    if (deposit > 0) {
+      await bankAccount
+        .connect(addr0)
+        .deposit(0, { value: deposit.toString() })
+    }
+
+    for (const withdrawalAmount of withdrawalAmount) {
+      await bankAccount.connect(addr0).requestWithdrawl(0, withdrawalAmount);
+    }
+
+    return { bankAccount, addr0, add1, addr2, addr3, addr4 };
+  }
+
   describe("Deployment", () => {
     it("Should deploy without error", async () => {
       await loadFixture(deployBankAccount);
@@ -103,6 +127,6 @@ describe("BankAccount", function () {
   });
 
   describe("Depositing", () => {
-    
+
   });
 });
