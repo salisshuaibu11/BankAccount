@@ -31,7 +31,7 @@ describe("BankAccount", function () {
 
     it("Should allow creating a double user account", async() => {
       const { bankAccount, addr0, addr1 } = await loadFixture(deployBankAccount); 
-      await bankAccount.connect(addr0).createAccount([addr1]);
+      await bankAccount.connect(addr0).createAccount([addr1.address]);
 
       const accounts1 = await bankAccount.connect(addr0).getAccounts();
       expect(accounts1.length).to.equal(1);
@@ -42,7 +42,7 @@ describe("BankAccount", function () {
 
     it("Should allow creating a triple user account", async() => {
       const { bankAccount, addr0, addr1, addr2 } = await loadFixture(deployBankAccount); 
-      await bankAccount.connect(addr0).createAccount([addr1, addr2]);
+      await bankAccount.connect(addr0).createAccount([addr1.address, addr2.address]);
 
       const accounts1 = await bankAccount.connect(addr0).getAccounts();
       expect(accounts1.length).to.equal(1);
@@ -56,7 +56,7 @@ describe("BankAccount", function () {
 
     it("Should allow creating a quad user account", async() => {
       const { bankAccount, addr0, addr1, addr2, addr3 } = await loadFixture(deployBankAccount); 
-      await bankAccount.connect(addr0).createAccount([addr1, addr2, addr3]);
+      await bankAccount.connect(addr0).createAccount([addr1.address, addr2.address, addr3.address]);
 
       const accounts1 = await bankAccount.connect(addr0).getAccounts();
       expect(accounts1.length).to.equal(1);
