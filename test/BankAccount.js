@@ -74,7 +74,7 @@ describe("BankAccount", function () {
     it("Should not allow creating an account with duplicate owners", async() => {
       const { bankAccount, addr0 } = await loadFixture(deployBankAccount); 
       await expect(bankAccount.connect(addr0).createAccount([addr0.address]))
-        .to.reverted;
+        .to.be.reverted;
     });
 
     it("Should not allow creating an account with 5 owners", async() => {
@@ -88,7 +88,17 @@ describe("BankAccount", function () {
           addr4.address
         ]
       ))
-        .to.reverted;
+        .to.be.reverted;
+    });
+
+    it("Should not allow creating account with 5 owners", async() => {
+      const { bankAccount, addr0} = await loadFixture(deployBankAccount); 
+      
+      for (let idx = 0; idx < 3; idx++) {
+        await bankAccount.connect(addr0).createAccount([])
+      }
+
+      await expect(bankAccount.connect(addr0).createAccount([])).to.be.reverted;
     });
   });
 });
