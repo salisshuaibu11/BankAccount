@@ -140,4 +140,44 @@ describe("BankAccount", function () {
         .be.reverted;
     });
   });
+
+  describe("Withdraw", () => {
+    describe("Request a withdraw", () => {
+      it("account owner can request withdraw", async () => {
+        const { bankAccount, addr0 } = await deployBankAccountWithAccounts(
+          1,
+          100
+        );
+        await bankAccount.connect(addr0).requestWithdrawl(0, 100);
+      });
+
+      it("account owner can not request withdraw with invalid amount", async () => {
+        const { bankAccount, addr0 } = await deployBankAccountWithAccounts(
+          1,
+          100
+        );
+        await expect(bankAccount.connect(addr0).requestWithdrawl(0, 101)).to.be
+          .reverted;
+      });
+
+      it("non-account owner cannot request withdraw", async () => {
+        const { bankAccount, addr1 } = await deployBankAccountWithAccounts(
+          1,
+          100
+        );
+        await expect(bankAccount.connect(addr1).requestWithdrawl(0, 90)).to.be
+          .reverted;
+      });
+
+      it("non-account owner cannot request withdraw", async () => {
+        const { bankAccount, addr0 } = await deployBankAccountWithAccounts(
+          1,
+          100
+        );
+        await bankAccount.connect(addr0).requestWithdrawl(0, 90);
+        await bankAccount.connect(addr0).requestWithdrawl(0, 10);
+      });
+    });
+  })
+
 });
