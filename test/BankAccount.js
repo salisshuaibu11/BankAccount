@@ -180,4 +180,47 @@ describe("BankAccount", function () {
     });
   })
 
+  describe("Approve a withdraw", () => {
+    it("should allow account owner to approve withdraw", async () => {
+      const { bankAccount, addr1 } = await deployBankAccountWithAccounts(
+        2,
+        100,
+        [100]
+      );
+      await bankAccount.connect(addr1).approveWithdrawl(0, 0);
+      expect(await bankAccount.getApprovals(0, 0)).to.equal(1);
+    });
+
+    it("should not allow non-account owner to approve withdraw", async () => {
+      const { bankAccount, addr2 } = await deployBankAccountWithAccounts(
+        2,
+        100,
+        [100]
+      );
+      await expect(bankAccount.connect(addr2).approveWithdrawl(0, 0)).to.be
+        .reverted;
+    });
+
+    it("should not allow owner to approve withdrawl multiple times", async () => {
+      const { bankAccount, addr1 } = await deployBankAccountWithAccounts(
+        2,
+        100,
+        [100]
+      );
+      bankAccount.connect(addr1).approveWithdrawl(0, 0);
+      await expect(bankAccount.connect(addr1).approveWithdrawl(0, 0)).to.be
+        .reverted;
+    });
+
+    it("should not allow creator of request to approve request", async () => {
+      const { bankAccount, addr0 } = await deployBankAccountWithAccounts(
+        2,
+        100,
+        [100]
+      );
+      await expect(bankAccount.connect(addr0).approveWithdrawl(0, 0)).to.be
+        .reverted;
+    });
+  });
+
 });
