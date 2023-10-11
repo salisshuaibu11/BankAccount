@@ -70,5 +70,11 @@ describe("BankAccount", function () {
       const accounts4 = await bankAccount.connect(addr3).getAccounts();
       expect(accounts4.length).to.equal(1);
     });
+
+    it("Should allow not allow creating an account with duplicate owners", async() => {
+      const { bankAccount, addr0 } = await loadFixture(deployBankAccount); 
+      await expect(bankAccount.connect(addr0).createAccount([addr0.address]))
+        .to.reverted;
+    });
   });
 });
