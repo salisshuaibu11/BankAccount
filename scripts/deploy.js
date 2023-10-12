@@ -5,15 +5,16 @@ async function main() {
   const BankAccount = await hre.ethers.getContractFactory("BankAccount");
   const bankAccount = await BankAccount.deploy();
 
-  await bankAccount.deployed();
+  await bankAccount.waitForDeployment();
   await writeDeploymentInfo(bankAccount);
 }
 
 async function writeDeploymentInfo(contract) {
+  console.log(contract);
   const data = {
     contract: {
-      address: contract.address,
-      signerAddress: contract.signer.address,
+      address: contract.target,
+      signerAddress: contract.runner.address,
       abi: contract.interface.format()
     }
   }
